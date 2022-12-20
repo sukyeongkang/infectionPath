@@ -98,51 +98,91 @@ char countryName[N_PLACE+1][MAX_PLACENAME] =
     "Unrecognized"
 };
 
-typedef struct ifs_ele {
-	int index;//number
-	int age;//age
-	int time;//time
-	place_t place[N_HISTORY];//place[N_HISTORY]
-} ifs_ele_t;
+////////// 환자 정보 저장  
+typedef struct ifs_ele{  
+	int index;  // 번호  
+	int age;    // 나이  
+	int time;   // 감염 시점  
+	place_t place[N_HISTORY]; //환자 이동 경로 enum 활용해 place_t 로 저장  
+}ifs_ele_t;
 
 
 
-void* ifctele_genElement(int index, int age, unsigned int detected_time, int history_place[N_HISTORY])
+////////// 환자 정보로 구조체 생성  
+void* ifctele_genElement( int index, int age, unsigned int detected_time, int history_place[N_HISTORY])
 {
-	ifs_ele_t* ptr;
+	ifs_ele_t * ptr;
 	
-	ptr = malloc();
-	ptr->index = index;
-	//..
-		
+	ptr = (ifs_ele_t*)malloc(5*sizeof (ifs_ele_t*));
+	ptr -> index = index;
+	ptr -> age = age;
+	ptr -> time = detected_time;
+	
+	int i;
+	
+	for (i=0; i<N_HISTORY; i++)
+	{
+		ptr -> place[i] = history_place[i];
+	
 	return ptr;
-}
-
-int ifctele_getAge(void* obj)
-{
-	ifs_ele_t* ptr = (ifs_ele_t*)obj;
+    }
 	
-	return ptr->age;
 }
 
-int ifctele_getHistPlaceIndex(void* obj, int index);
-unsigned int ifctele_getinfestedTime(void* obj);
+//{ ifs_ele_t*ptr;
+//  ptr= malloc[];
+//  ptr->index 
 
-
-//char* ifctele_getPlaceName(int placeIndex);
-
-
-void ifctele_printElement(void* obj)
+////////// 환자 나이 반환  
+int ifctele_getAge(void*obj)
 {
-	ifs_ele_t* ptr = (ifs_ele_t*)obj;
+	ifs_ele_t *ptr = (ifs_ele_t*)obj;
 	
-	printf("Age : %i\n", ptr->age);
+	return (ptr ->age);
+}
+
+////////// 환자 이동 경로 반환  
+int ifctele_getHistPlaceIndex(void* obj, int index)
+{
+	ifs_ele_t * ptr = (ifs_ele_t *)obj;
+	
+	return ( ptr -> place[index]);
 }
 
 
+////////// 환자 감염 시점  반환  
+unsigned int ifctele_getinfectedTime(void* obj)
+{
+	ifs_ele_t *ptr = (ifs_ele_t*)obj;
+	
+	return (ptr -> time);
+}
 
 
-char* ifctele_getPlaceName(int placeIndex)
+////////// 장소 반환  
+char* ifctele_getPlace(int placeIndex)
 {
 	return countryName[placeIndex];
+	 
 }
+
+////////// 환자 정보 출력  
+void ifctele_printElement(void *obj)
+{
+	ifs_ele_t* ptr = (ifs_ele_t*)obj; //포인터로 구조체 가르킴  
+	
+	printf("Index : %d\n", ptr->index);
+	printf("Age : %i\n", ptr->age);
+	printf("Time : %i\n", ptr->time);
+	printf("History Place :  ");
+	
+	int i;
+	for (i=0; i < N_HISTORY; i++)
+	{
+		printf("%s", ifctele_getPlace(ptr ->place[i]));
+	}
+
+	printf("\n"); 
+}
+
+
