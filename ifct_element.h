@@ -13,7 +13,7 @@
 #define MAX_PLACENAME               100
 
 void* ifctele_genElement(int index, int age, unsigned int detected_time, int history_place[N_HISTORY]);
-char* ifctele_getPlaceName(int placeIndex);
+char* ifctele_getPlace(int placeIndex);
 int ifctele_getHistPlaceIndex(void* obj, int index);
 unsigned int ifctele_getinfestedTime(void* obj);
 int ifctele_getAge(void* obj);
