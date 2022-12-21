@@ -110,7 +110,8 @@ int main(int argc, const char * argv[]) {
 				scanf("%i", &num);
 				
 				
-				if (num > ifctdb_len()-1 || num < 0){
+				if (num > ifctdb_len()-1 || num < 0)
+				{
 					printf(" [ERROR] WRONG INDEX ! PLEASE CHOOSE BETWEEN 0~%i\n", ifctdb_len()-1);
 					break;
 				}
@@ -140,6 +141,7 @@ int main(int argc, const char * argv[]) {
 					{
 						cnt++;
 						ifctele_printElement(ifct_element);
+						break;
 					}
 				    //printf("")
 				 } 
@@ -175,7 +177,7 @@ int main(int argc, const char * argv[]) {
                 printf("Patient index:\n");
                 scanf("%d", &patient_num);
                 
-                ifct_element = ifctdb_getData(patient_num);
+                ifct_element = ifctdb_getData(patient_num); 
                 
                 if(ifct_element == NULL)  // 범위 외의 번호를 고를 경우  
                 {
@@ -186,7 +188,7 @@ int main(int argc, const char * argv[]) {
 				int defected_time = ifctele_getinfestedTime(ifct_element);
 				int defected_place = ifctele_getHistPlaceIndex(ifct_element, -1);
 				
-				printf("[TRACKING] patient %d is infected by %d (time : %d, place : %s)\n", patient_num, patient_num, defected_time, ifctele_getPlace(defected_place));
+				printf("[TRACKING] patient %d is infected by %d (time : %d, place : %s)\n", patient_num, patient_num, defected_time, ifctele_getPlace(defected_place));  //범위 내의 환자 번호 고를 경우   
                     
                 break;
                 
