@@ -126,48 +126,60 @@ int main(int argc, const char * argv[]) {
                 
                    
             case MENU_PLACE: // 감염 장소 선택
-                printf("Enter Place Name:\n");
-                scanf("%s", &num_place);
+            {
+                int place;
+                
+                printf("Enter Place Name:\n"); //장소 입력  
+                scanf("%i", &place);
                 
                 int place_index;
-                int cnt = 0;
+                int cnt;
                 
+                // 입력 받은 장소에서 감염된 환자 수 세기  
                 for(i=0; i<ifctdb_len(); i++)
 				{
 					ifct_element = ifctdb_getData(i);
 					place_index = ifctele_getHistPlaceIndex(ifct_element, N_HISTORY -1);
 					
-					if (!strcmp(ifctele_getPlace(place_index), num_place))
+					if (!strcmp(ifctele_getPlace(place_index), place))
 					{
 						cnt++;
 						ifctele_printElement(ifct_element);
 						break;
 					}
-				    //printf("")
-				 } 
+				    printf("There are %i patients detected in %c \n", cnt, place);
             
-                
+                }
                 break;
-                
+         }
                 
                 
             case MENU_AGE: // 나이 선택, 범위에 있는 환자 정보 출력  
-            
+            {
+            	int minAge, maxAge;
+            	int cnt;
+	
 			    printf("Enter minimal age :\n ");  // 최소 나이 입력받기  
 				scanf("%d", &minAge);
 				printf("Enter maximal age :\n");   // 최대 나이 입력받기  
 				scanf("%d", &maxAge);
 				
+				// 입력받은 범위 내에 있는 환자 수 세기  
 				for (i=0; i<ifctdb_len(); i++)
 				{					
 					if(minAge <= ifctele_getAge(ifctdb_getData(i)) && ifctele_getAge(ifctdb_getData(i)) <= maxAge)
 					{
+						cnt++; 
 						printf("--------------------");
 						ifctele_printElement(ifctdb_getData(i));
 					}
+					
+					printf("There are %i patients whose age is between %i and %i\n", cnt, minAge, maxAge);
+					
 				}
                 
                 break;
+            }
                 
             case MENU_TRACK: // 감염 경로 및 최초 전파자 출력하기  
                 
